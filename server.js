@@ -7,7 +7,7 @@ const animals = require("./zoo/animals");
 const employees = require("./zoo/employees");
 const food = require("./zoo/food");
 const bodyParser = require("body-parser");
-
+app.use('/public', express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
@@ -96,8 +96,22 @@ app.delete("/api/animals/:breed", (req, res) => {
         res.status(404).json({ error: "Animal not found" });
     }
 });
+// React template engine
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine())
 
 
+  app.set("views", "./views"); // specify the views directory
+
+
+app.get("/", (req, res) => { // can chenge directore like /api/animals
+  let options = {
+    title: " This is Zoo",
+    content:
+      " this is very important content",
+  };
+  res.render("Index", options); // important line jsx rander when user hits the touter 
+}); // can chenge then "index" to file it should be linked to, like "animals"
 
 
 
