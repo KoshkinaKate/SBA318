@@ -44,10 +44,58 @@ app.get("/api/animals", (req, res) => {
     if (foods) res.json(foods);
   });
 
+// Error-handling middleware
+  app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Internal Server Error');
+  });
+
+// POST route
+app.post("/api/animals", (req, res) => {
+    const newAnimal = req.body; 
+
+    animals.push(newAnimal); 
+    res.status(201).json(newAnimal); 
+});
+//in order to work with postman - open it GET + localhost.. -SEND
+//1. change GET to POST --- body --- raw --- JSON - add data - SEND
+
+// PUT 
+
+app.put("/api/animals/:breed", (req, res) => {
+    const breedToUpdate = req.params.breed;
+    const updatedAnimalData = req.body; 
 
 
+    const index = animals.findIndex(animal => animal.breed === breedToUpdate); // Find the index of the animal to update
+
+    animals[index] = updatedAnimalData;
+
+    res.json(animals[index] || { error: "Animal not found" });
+});
 
 
+// app.put("/api/animals", (req, res) => {
+//     const updatedAnimalData = req.body; 
+
+//     animals.forEach((animal, index) => {
+//         animals[index] = updatedAnimalData;
+//     });
+
+//     res.json(animals); 
+
+// DELETE
+app.delete("/api/animals/:breed", (req, res) => {
+    const breedToDelete = req.params.breed;
+
+    const index = animals.findIndex(animal => animal.breed === breedToDelete);
+    if (index !== -1) {
+        const deletedAnimal = animals.splice(index, 1)[0];
+        res.json(deletedAnimal);
+    } else {
+        res.status(404).json({ error: "Animal not found" });
+    }
+});
 
 
 
