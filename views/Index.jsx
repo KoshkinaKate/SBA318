@@ -8,7 +8,10 @@ export default function index() {
             <link rel="stylesheet" href="/public/css/index.css" />
         </head>
         <body>
-            <h1>This is Zoo</h1>
+            <div className="main">
+                <h1>This is Zoo</h1>
+            </div>
+           
         </body>
        
     </html>

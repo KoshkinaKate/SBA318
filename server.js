@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-//middleware-----------
+//middleware------------
 const animals = require("./zoo/animals");
 const employees = require("./zoo/employees");
 const food = require("./zoo/food");
